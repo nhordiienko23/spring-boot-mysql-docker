@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="8-create-products-table" author="Nikita Hordiienko">
+        <validCheckSum>ANY</validCheckSum>
+
+        <createTable tableName="products">
+            <column name="product_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="9-insert-products" author="Nikita Hordiienko">
+        <insert tableName="products">
+            <column name="name" value="trainers Jordan 11"/>
+            <column name="price" value="200.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="trainers Jordan 1"/>
+            <column name="price" value="150.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="t-shirt Jordan white"/>
+            <column name="price" value="100.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="pants Jordan black"/>
+            <column name="price" value="100.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="cap Jordan black"/>
+            <column name="price" value="100.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="bag Jordan black"/>
+            <column name="price" value="300.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="backpack Jordan black"/>
+            <column name="price" value="200.00"/>
+        </insert>
+        <insert tableName="products">
+            <column name="name" value="shorts Jordan black"/>
+            <column name="price" value="100.00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="10-add-product-id-to-order-table" author="Nikita Hordiienko">
+        <validCheckSum>ANY</validCheckSum>
+
+        <addColumn tableName="orders">
+            <column name="product_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="11-add-fk-orders-products" author="Nikita Hordiienko">
+        <addForeignKeyConstraint baseTableName="orders"
+                                 baseColumnNames="product_id"
+                                 constraintName="fk_orders_product"
+                                 referencedTableName="products"
+                                 referencedColumnNames="product_id"/>
+    </changeSet>
+
+</databaseChangeLog>
