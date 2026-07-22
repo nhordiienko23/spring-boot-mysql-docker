@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="3-create-order-table" author="Nikita Hordiienko">
+        <createTable tableName="orders">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                             foreignKeyName="fk_orders_user"/>
+            </column>
+
+            <column name="product_name" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+
+            <column name="price" type="decimal(10,2)">
+                <constraints nullable="false"></constraints>
+            </column>
+
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"></constraints>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4-insert-initial-orders" author="Nikita Hordiienko">
+
+        <insert tableName="orders">
+            <column name="user_id" value="1"></column>
+            <column name="product_name" value="trainers Jordan 11"></column>
+            <column name="price" value="200"></column>
+            <column name="created_at" valueDate="2026-07-22T10:00:00"></column>
+        </insert>
+
+        <insert tableName="orders">
+            <column name="user_id" value="2"></column>
+            <column name="product_name" value="trainers Jordan 1"></column>
+            <column name="price" value="150"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+
+    </changeSet>
+
+
+</databaseChangeLog>

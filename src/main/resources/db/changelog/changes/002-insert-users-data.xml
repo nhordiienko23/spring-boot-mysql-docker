@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <changeSet id="2-insert-initial-users" author="nikita hordiienko">
+    <changeSet id="2-insert-initial-users" author="Nikita Hordiienko">
         <insert tableName="users">
             <column name="first_name" value="Nikita"></column>
             <column name="last_name" value="Hordiienko"></column>

@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="1-create-user-table" author="nikita-hordiienko">
+    <changeSet id="1-create-user-table" author="Nikita Hordiienko">
         <createTable tableName="users">
 
             <column name="id" type="bigint" autoIncrement="true">
@@ -34,7 +34,8 @@
 
         </createTable>
     </changeSet>
-    
+
     <include file="db/changelog/changes/002-insert-users-data.xml"/>
+    <include file="db/changelog/changes/003-create-and-fill-orders-table.xml"/>
 
 </databaseChangeLog>
