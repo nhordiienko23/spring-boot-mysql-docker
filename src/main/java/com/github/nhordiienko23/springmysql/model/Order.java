@@ -2,7 +2,6 @@ package com.github.nhordiienko23.springmysql.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,20 +15,17 @@ public class Order {
     private Long id;
 
 
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "product_name")
-    private String productName;
-
-
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "product_id")
+    private Long productId;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public Order(){}
+    public Order() {
+    }
 
     public Long getId() {
         return id;
@@ -47,13 +43,6 @@ public class Order {
         this.userId = userId;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -63,11 +52,13 @@ public class Order {
         this.createdAt = createdAt;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }
+
+

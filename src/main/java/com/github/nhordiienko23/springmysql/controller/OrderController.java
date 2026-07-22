@@ -22,9 +22,9 @@ public class OrderController {
         return orderRepository.findByUserId(userId);
     }
 
-    @GetMapping("/search")
-    public List<Order> searchByProductName(@RequestParam String productName){
-        return orderRepository.findByProductNameContainingIgnoreCase(productName);
+    @GetMapping("/by-product")
+    public List<Order> searchByProductName(@RequestParam Long productID){
+        return orderRepository.findByProductId(productID);
     }
 
     @GetMapping
