@@ -20,14 +20,14 @@
                                  referencedTableName="users"
                                  referencedColumnNames="user_id"/>
     </changeSet>
-    
+
     <changeSet id="7-insert-one-user" author="Nikita Hordiienko">
         <insert tableName="users">
-            <column name="first_name" value="Svetlana"></column>
-            <column name="last_name" value="Hordiienko"></column>
-            <column name="email" value="shordiienko@gmail.com"></column>
-            <column name="last_login_at" valueDate="2026-07-22T10:00:00"></column>
-            <column name="last_update_at" valueDate="2026-07-22T10:00:00"></column>
+            <column name="first_name" value="Svetlana"/>
+            <column name="last_name" value="Hordiienko"/>
+            <column name ="email" value="shordiienko@gmail.com"/>
+            <column name="last_login_at" valueDate="2026-07-22T10:00:00"/>
+            <column name="last_update_at" valueDate="2026-07-22T10:00:00"/>
         </insert>
     </changeSet>
 
