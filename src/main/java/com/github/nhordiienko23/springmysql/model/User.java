@@ -1,5 +1,6 @@
 package com.github.nhordiienko23.springmysql.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
+@JsonPropertyOrder({"id","firstName","lastName", "email","lastLoginAt", "lastUpdateAt"})
 public class User {
 
     @Id
