@@ -34,5 +34,7 @@
 
         </createTable>
     </changeSet>
+    
+    <include file="db/changelog/changes/002-insert-users-data.xml"/>
 
 </databaseChangeLog>
