@@ -37,5 +37,6 @@
 
     <include file="db/changelog/changes/002-insert-users-data.xml"/>
     <include file="db/changelog/changes/003-create-and-fill-orders-table.xml"/>
+    <include file="db/changelog/changes/004-rename-user-id-column.xml"/>
 
 </databaseChangeLog>
