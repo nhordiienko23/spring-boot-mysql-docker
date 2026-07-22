@@ -33,6 +33,16 @@ public class UserController {
         return userRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
+    @GetMapping("/by-email")
+    public List<User> searchUsersByEmail(@RequestParam String email){
+        return userRepository.findByEmail(email);
+    }
+
+    @GetMapping("/by-firstName")
+    public List<User> searchUsersByFirstName(@RequestParam String firstName){
+        return userRepository.findByFirstNameIgnoreCase(firstName);
+    }
+
     @GetMapping("/by-lastName")
     public List<User> searchUsersByLastName(
             @RequestParam String lastName
