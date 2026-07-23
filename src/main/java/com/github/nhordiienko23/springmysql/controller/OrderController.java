@@ -18,13 +18,13 @@ public class OrderController {
     }
 
     @GetMapping("/by-user")
-    public List<Order> searchById(@RequestParam long userId){
+    public List<Order> searchById(@RequestParam Long userId){
         return orderRepository.findByUserId(userId);
     }
 
     @GetMapping("/by-product")
-    public List<Order> searchByProductId(@RequestParam Long productID){
-        return orderRepository.findByProductId(productID);
+    public List<Order> searchByProductId(@RequestParam Long productId){
+        return orderRepository.findByProductId(productId);
     }
 
     @GetMapping

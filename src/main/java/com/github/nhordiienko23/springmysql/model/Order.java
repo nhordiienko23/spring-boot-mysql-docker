@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
-@JsonPropertyOrder({"id","userId","productName","price","createdAt"})
+@JsonPropertyOrder({"id","userId","productId","createdAt"})
 public class Order {
 
     @Id
