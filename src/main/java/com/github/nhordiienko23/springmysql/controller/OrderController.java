@@ -23,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping("/by-product")
-    public List<Order> searchByProductName(@RequestParam Long productID){
+    public List<Order> searchByProductId(@RequestParam Long productID){
         return orderRepository.findByProductId(productID);
     }
 
