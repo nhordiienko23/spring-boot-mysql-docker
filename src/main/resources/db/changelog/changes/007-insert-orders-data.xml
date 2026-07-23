@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="13-insert-orders-data" author="Nikita Hordiienko">
+        <insert tableName="orders">
+            <column name="product_id" value="1"></column>
+            <column name="user_id" value="1"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="2"></column>
+            <column name="user_id" value="2"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="3"></column>
+            <column name="user_id" value="3"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="4"></column>
+            <column name="user_id" value="4"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="5"></column>
+            <column name="user_id" value="5"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="6"></column>
+            <column name="user_id" value="6"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="7"></column>
+            <column name="user_id" value="6"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="8"></column>
+            <column name="user_id" value="6"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="8"></column>
+            <column name="user_id" value="6"></column>
+            <column name="created_at" valueDate="2026-07-22T11:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="1"></column>
+            <column name="user_id" value="6"></column>
+            <column name="created_at" valueDate="2026-07-22T12:00:00"></column>
+        </insert>
+        <insert tableName="orders">
+            <column name="product_id" value="3"></column>
+            <column name="user_id" value="6"></column>
+            <column name="created_at" valueDate="2026-07-22T12:00:00"></column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
