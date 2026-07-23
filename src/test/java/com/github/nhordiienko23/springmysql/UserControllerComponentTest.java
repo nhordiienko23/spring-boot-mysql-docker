@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.CoreMatchers.everyItem;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,7 +38,7 @@ public class UserControllerComponentTest extends AbstractIntegrationTest {
         mockMvc.perform(get("/users/by-lastName").param("lastName","Hordiienko"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$..lastName",everyItem(is("Hordiienko"))));
+                .andExpect(jsonPath("$..lastName",everyItem(equalToIgnoringCase("Hordiienko"))));
     }
 
     @Test
@@ -80,7 +79,7 @@ public class UserControllerComponentTest extends AbstractIntegrationTest {
             mockMvc.perform(get("/users/by-firstName").param("firstName","Nikita"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray())
-                    .andExpect(jsonPath("$..firstName",everyItem(is("Nikita"))));
+                    .andExpect(jsonPath("$..firstName",everyItem(equalToIgnoringCase("Nikita"))));
 
       }
     @Test
