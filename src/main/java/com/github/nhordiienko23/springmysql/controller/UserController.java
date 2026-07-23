@@ -34,8 +34,10 @@ public class UserController {
     }
 
     @GetMapping("/by-email")
-    public List<User> searchUsersByEmail(@RequestParam String email){
-        return userRepository.findByEmail(email);
+    public ResponseEntity<User> searchUsersByEmail(@RequestParam String email){
+        return userRepository.findByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElseGet(()->ResponseEntity.notFound().build());
     }
 
     @GetMapping("/by-firstName")
