@@ -88,7 +88,7 @@ public class UserControllerComponentTest extends AbstractIntegrationTest {
         mockMvc.perform(get("/users/by-firstName").param("firstName","asdasd"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$..firstName",hasSize(0)));
+                .andExpect(jsonPath("$",hasSize(0)));
 
     }
 
