@@ -3,6 +3,7 @@ package com.github.nhordiienko23.springmysql;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -12,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@WithMockUser(username = "testuser", roles = "USER")
 public class OrderControllerComponentTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -34,6 +35,7 @@ public class OrderControllerComponentTest extends AbstractIntegrationTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$..productId",everyItem(is(1))));
     }
+
     @Test
     @DisplayName("GET/orders/by-product?productId=123123 - must return empty list")
     void shouldReturnEmptyListByProductId()throws Exception{
@@ -51,6 +53,7 @@ public class OrderControllerComponentTest extends AbstractIntegrationTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$..userId",everyItem(is(6))));
     }
+
     @Test
     @DisplayName("GET/orders/by-user?userId=99999999 - must return empty list")
     void shouldReturnEmptyListByUserId()throws Exception{
@@ -59,6 +62,4 @@ public class OrderControllerComponentTest extends AbstractIntegrationTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$",hasSize(0)));
     }
-
-
 }
