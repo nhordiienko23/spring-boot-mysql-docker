@@ -8,7 +8,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 
 @SpringBootTest
-// ВОТ ЭТА МАГИЧЕСКАЯ НАСТРОЙКА ОТКЛЮЧИТ БЛОКИРОВКУ 401 В ТЕСТАХ:
+// Отключаем фильтры Spring Security для тестов MockMvc
 @AutoConfigureMockMvc(addFilters = false)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public abstract class AbstractIntegrationTest {

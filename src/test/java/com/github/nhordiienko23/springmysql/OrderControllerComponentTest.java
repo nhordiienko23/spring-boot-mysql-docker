@@ -3,7 +3,6 @@ package com.github.nhordiienko23.springmysql;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -13,7 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WithMockUser(username = "testuser", roles = "USER")
 public class OrderControllerComponentTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -21,7 +19,7 @@ public class OrderControllerComponentTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("GET/orders - must return list of all orders")
-    void shouldReturnAllOrders()throws Exception{
+    void shouldReturnAllOrders() throws Exception {
         mockMvc.perform(get("/orders"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
@@ -29,37 +27,37 @@ public class OrderControllerComponentTest extends AbstractIntegrationTest {
 
     @Test
     @DisplayName("GET/orders/by-product?productId=1 - must return list of all orders with productId=1")
-    void shouldReturnListOfOrdersByProductId() throws Exception{
-        mockMvc.perform(get("/orders/by-product").param("productId","1"))
+    void shouldReturnListOfOrdersByProductId() throws Exception {
+        mockMvc.perform(get("/orders/by-product").param("productId", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$..productId",everyItem(is(1))));
+                .andExpect(jsonPath("$..productId", everyItem(is(1))));
     }
 
     @Test
     @DisplayName("GET/orders/by-product?productId=123123 - must return empty list")
-    void shouldReturnEmptyListByProductId()throws Exception{
-        mockMvc.perform(get("/orders/by-product").param("productId","123123"))
+    void shouldReturnEmptyListByProductId() throws Exception {
+        mockMvc.perform(get("/orders/by-product").param("productId", "123123"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$",hasSize(0)));
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
     @DisplayName("GET/orders/by-user?userId=6 - must return list of all orders with userId=6")
-    void shouldReturnOrderByUserId()throws Exception{
-        mockMvc.perform(get("/orders/by-user").param("userId","6"))
+    void shouldReturnOrderByUserId() throws Exception {
+        mockMvc.perform(get("/orders/by-user").param("userId", "6"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$..userId",everyItem(is(6))));
+                .andExpect(jsonPath("$..userId", everyItem(is(6))));
     }
 
     @Test
     @DisplayName("GET/orders/by-user?userId=99999999 - must return empty list")
-    void shouldReturnEmptyListByUserId()throws Exception{
-        mockMvc.perform(get("/orders/by-user").param("userId","99999999"))
+    void shouldReturnEmptyListByUserId() throws Exception {
+        mockMvc.perform(get("/orders/by-user").param("userId", "99999999"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$",hasSize(0)));
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 }
