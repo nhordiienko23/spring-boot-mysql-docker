@@ -1,11 +1,13 @@
 package com.github.nhordiienko23.springmysql.config;
 
+import com.github.nhordiienko23.springmysql.jwtToken.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
@@ -14,7 +16,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
 
         // Специальный обработчик для Spring Security 6,
         // который заставляет фреймворк отдавать токен в куки без задержек
@@ -35,6 +37,7 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(requestHandler)
                 )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
