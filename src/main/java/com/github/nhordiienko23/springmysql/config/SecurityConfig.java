@@ -1,11 +1,16 @@
 package com.github.nhordiienko23.springmysql.config;
 
 import com.github.nhordiienko23.springmysql.jwtToken.JwtFilter;
+import com.github.nhordiienko23.springmysql.service.CustomOAuth2UserService;
+import com.github.nhordiienko23.springmysql.service.CustomOidcUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -13,31 +18,36 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        // Специальный обработчик для Spring Security 6,
-        // который заставляет фреймворк отдавать токен в куки без задержек
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName(null);
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   CustomOAuth2UserService customOAuth2UserService,
+                                                   CustomOidcUserService customOidcUserService) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register", "/login", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .oauth2Login(Customizer.withDefaults())
-                .logout(logout -> logout.logoutSuccessUrl("/"))
+                .formLogin(form -> form.permitAll()
+                        .defaultSuccessUrl("/swagger-ui/index.html", true))
+                .oauth2Login(oauth2 -> oauth2
+                        .defaultSuccessUrl("/swagger-ui/index.html", true)
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
 
-                // ПРАВИЛЬНАЯ НАСТРОЙКА CSRF
-                .csrf(csrf -> csrf
-                        // Передаем токен в куки XSRF-TOKEN и делаем его доступным для JavaScript (Swagger'а)
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .csrfTokenRequestHandler(requestHandler)
+                                .oidcUserService(customOidcUserService)
+                        )
                 )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(csrf -> csrf.disable())
                 .build();
     }
 }

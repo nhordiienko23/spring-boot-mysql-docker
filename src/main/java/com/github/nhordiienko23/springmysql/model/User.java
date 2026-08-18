@@ -2,13 +2,19 @@ package com.github.nhordiienko23.springmysql.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-@JsonPropertyOrder({"id","firstName","lastName", "email","lastLoginAt", "lastUpdateAt"})
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonPropertyOrder({"id", "firstName", "lastName", "email","password", "roles", "lastLoginAt", "registeredAt", "lastUpdateAt"})
 public class User {
 
     @Id
@@ -22,7 +28,10 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name ="email",unique = true)
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "last_login_at")
@@ -31,53 +40,12 @@ public class User {
     @Column(name = "last_update_at")
     private LocalDateTime lastUpdateAt;
 
-    public User(){}
+    @Column(name = "registered_at")
+    private LocalDateTime registeredAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDateTime getLastLoginAt() {
-        return lastLoginAt;
-    }
-
-    public void setLastLoginAt(LocalDateTime lastLoginAt) {
-        this.lastLoginAt = lastLoginAt;
-    }
-
-    public LocalDateTime getLastUpdateAt() {
-        return lastUpdateAt;
-    }
-
-    public void setLastUpdateAt(LocalDateTime lastUpdateAt) {
-        this.lastUpdateAt = lastUpdateAt;
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private List<Role> roles;
 }

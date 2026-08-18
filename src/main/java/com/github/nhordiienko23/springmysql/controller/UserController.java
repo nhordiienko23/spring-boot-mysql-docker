@@ -4,6 +4,7 @@ import com.github.nhordiienko23.springmysql.model.User;
 import com.github.nhordiienko23.springmysql.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +18,13 @@ public class UserController {
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a user by id")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by firstName and lastName case sensitive")
     @GetMapping("/search")
     public List<User> searchUsers(
@@ -32,19 +33,20 @@ public class UserController {
     ) {
         return userService.searchUsers(firstName, lastName);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by email")
     @GetMapping("/by-email")
     public ResponseEntity<User> searchUsersByEmail(@RequestParam String email) {
         return userService.searchUsersByEmail(email);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by firstName IgnoreCase")
     @GetMapping("/by-firstName")
     public List<User> searchUsersByFirstName(@RequestParam String firstName) {
         return userService.searchUsersByFirstName(firstName);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by lastName IgnoreCase")
     @GetMapping("/by-lastName")
     public List<User> searchUsersByLastName(
@@ -53,6 +55,7 @@ public class UserController {
         return userService.searchUsersByLastName(lastName);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of all users")
     @GetMapping
     public List<User> showAllUsers() {
