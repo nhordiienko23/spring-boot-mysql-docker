@@ -22,13 +22,12 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public String register(String username,
+    public void register(String username,
                            String email,
-                           String password,
-                           Model model) {
+                           String password
+                           ) {
         if (userRepository.existsByEmail(email)) {
-            model.addAttribute("error", "Email already exists");
-            return "register";
+            throw new IllegalArgumentException("Email is already in use!");
         }
 
         User newUser = User.builder().
@@ -39,7 +38,5 @@ public class RegisterServiceImpl implements RegisterService {
                 .roles(List.of(Role.ROLE_USER))
                 .build();
         userRepository.save(newUser);
-        model.addAttribute("success", "Registration successful! You can now log in.");
-         return "redirect:/login";
     }
 }

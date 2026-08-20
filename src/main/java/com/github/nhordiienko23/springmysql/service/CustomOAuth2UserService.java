@@ -47,7 +47,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .email(finalEmail)
                     .roles(List.of(Role.ROLE_USER))
                     .registeredAt(LocalDateTime.now())
-                    .lastLoginAt(LocalDateTime.now())
                     .build();
             return userRepository.save(newUser);
         });

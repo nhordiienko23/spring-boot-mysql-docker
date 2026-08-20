@@ -18,12 +18,15 @@ public class UserController {
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a user by id")
     @GetMapping("/{id}")
+
     public ResponseEntity<User> getUserById(@PathVariable long id) {
         return userService.getUserById(id);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by firstName and lastName case sensitive")
     @GetMapping("/search")
@@ -33,12 +36,14 @@ public class UserController {
     ) {
         return userService.searchUsers(firstName, lastName);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by email")
     @GetMapping("/by-email")
     public ResponseEntity<User> searchUsersByEmail(@RequestParam String email) {
         return userService.searchUsersByEmail(email);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "returns a list of users by firstName IgnoreCase")
     @GetMapping("/by-firstName")

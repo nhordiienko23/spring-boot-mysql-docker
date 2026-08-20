@@ -4,8 +4,7 @@ import com.github.nhordiienko23.springmysql.dto.UserDto;
 import org.springframework.ui.Model;
 
 public interface RegisterService {
-    String register(String username,
+    void register(String username,
                      String email,
-                     String password,
-                     Model model);
+                     String password);
 }
