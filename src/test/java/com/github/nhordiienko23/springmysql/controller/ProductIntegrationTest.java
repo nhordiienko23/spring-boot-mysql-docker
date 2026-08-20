@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user; // <--- ИМПОРТ ДЛЯ АВТОРИЗАЦИИ
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -56,6 +56,30 @@ class ProductIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Laptop")))
                 .andExpect(jsonPath("$[1].name", is("Mouse")));
+    }
+
+    @Test
+    void shouldFindProductByIdSuccessfully() throws Exception {
+        Product savedProduct = productRepository.findAll().get(0);
+
+        mockMvc.perform(get("/products/find-by-id")
+                        .with(user("admin").roles("USER")) // <--- Добавили авторизацию
+                        .param("id", savedProduct.getId().toString())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(savedProduct.getName())))
+                .andExpect(jsonPath("$.price", is(savedProduct.getPrice().doubleValue())));
+    }
+
+    @Test
+    void shouldSearchProductsByNameIgnoreCase() throws Exception {
+        mockMvc.perform(get("/products/search")
+                        .with(user("admin").roles("USER")) // <--- Добавили авторизацию
+                        .param("name", "lap")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name", is("Laptop")));
     }
 
     @Test
