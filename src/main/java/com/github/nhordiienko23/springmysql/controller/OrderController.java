@@ -21,28 +21,28 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @Operation(summary = "returns a list of orders by user id")
     @GetMapping("/by-user")
     public List<Order> searchById(@RequestParam Long userId) {
         return orderService.searchById(userId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    
     @Operation(summary = "returns a list of orders by product id")
     @GetMapping("/by-product")
     public List<Order> searchByProductId(@RequestParam Long productId) {
         return orderService.searchByProductId(productId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @Operation(summary = "returns a list of all orders")
     @GetMapping
     public List<Order> showAll() {
         return orderService.showAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/debug-token")
     public ResponseEntity<?> getAccessToken(org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken authentication) {
         return ResponseEntity.ok(authentication);

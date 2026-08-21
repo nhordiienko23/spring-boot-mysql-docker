@@ -60,6 +60,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        return new DefaultOAuth2User(authorities, oAuth2User.getAttributes(), userNameAttributeName);
+        return new CustomUserDetails(user,oAuth2User.getAttributes());
     }
 }

@@ -59,6 +59,6 @@ public class CustomOidcUserService extends OidcUserService {
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
 
-        return new DefaultOidcUser(authorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
+        return new CustomUserDetails(user, oidcUser.getAttributes());
     }
 }

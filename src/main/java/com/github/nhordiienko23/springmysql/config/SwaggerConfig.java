@@ -30,6 +30,13 @@ public class SwaggerConfig {
                 .pathsToMatch("/products/**")
                 .build();
     }
+    @Bean
+    public GroupedOpenApi profileApi() {
+        return GroupedOpenApi.builder()
+                .group("profile")
+                .pathsToMatch("/profile/**")
+                .build();
+    }
 
 
 }

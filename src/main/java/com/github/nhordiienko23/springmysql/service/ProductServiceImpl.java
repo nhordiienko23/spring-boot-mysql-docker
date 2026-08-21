@@ -3,6 +3,7 @@ package com.github.nhordiienko23.springmysql.service;
 import com.github.nhordiienko23.springmysql.model.Product;
 import com.github.nhordiienko23.springmysql.repository.ProductRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

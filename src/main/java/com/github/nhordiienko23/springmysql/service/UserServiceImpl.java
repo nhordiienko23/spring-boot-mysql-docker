@@ -3,6 +3,7 @@ package com.github.nhordiienko23.springmysql.service;
 import com.github.nhordiienko23.springmysql.model.User;
 import com.github.nhordiienko23.springmysql.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<User> getUserById(long id) {
         return userRepository.findById(id).
@@ -22,11 +24,13 @@ public class UserServiceImpl implements UserService{
                 .orElseGet(()->ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<User> searchUsers(String firstName, String lastName) {
         return userRepository.findByFirstNameAndLastName (firstName, lastName);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public ResponseEntity<User> searchUsersByEmail(String email) {
         return userRepository.findByEmail(email)
@@ -34,18 +38,21 @@ public class UserServiceImpl implements UserService{
                 .orElseGet(()->ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<User> searchUsersByFirstName(String firstName) {
         return userRepository.findByFirstNameIgnoreCase(firstName);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<User> searchUsersByLastName(String lastName) {
         return userRepository.findByLastNameIgnoreCase(lastName);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<User> showAllUsers() {
         return userRepository.findAll();
     }
-}
+}       
