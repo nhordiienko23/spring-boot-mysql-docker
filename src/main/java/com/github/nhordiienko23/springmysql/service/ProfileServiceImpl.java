@@ -2,6 +2,7 @@ package com.github.nhordiienko23.springmysql.service;
 
 import com.github.nhordiienko23.springmysql.dto.UserDto;
 import com.github.nhordiienko23.springmysql.mapper.UserMapper;
+import com.github.nhordiienko23.springmysql.model.Order;
 import com.github.nhordiienko23.springmysql.model.User;
 import com.github.nhordiienko23.springmysql.repository.ProfileService;
 import com.github.nhordiienko23.springmysql.repository.UserRepository;
@@ -9,16 +10,19 @@ import com.github.nhordiienko23.springmysql.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final OrderService orderService;
 
-    public ProfileServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public ProfileServiceImpl(UserRepository userRepository, UserMapper userMapper, OrderService orderService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.orderService = orderService;
     }
 
 
@@ -47,5 +51,5 @@ public class ProfileServiceImpl implements ProfileService {
         userRepository.deleteById(id);
     }
 
-
+    
 }

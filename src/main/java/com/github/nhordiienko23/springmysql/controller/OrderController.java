@@ -28,7 +28,7 @@ public class OrderController {
         return orderService.searchById(userId);
     }
 
-    
+
     @Operation(summary = "returns a list of orders by product id")
     @GetMapping("/by-product")
     public List<Order> searchByProductId(@RequestParam Long productId) {
@@ -43,6 +43,7 @@ public class OrderController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/debug-token")
     public ResponseEntity<?> getAccessToken(org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken authentication) {
         return ResponseEntity.ok(authentication);

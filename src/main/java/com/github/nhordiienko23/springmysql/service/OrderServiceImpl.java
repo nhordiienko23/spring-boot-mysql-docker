@@ -17,7 +17,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("#userId==authentication.principal.id or hasRole('ADMIN')")
     @Override
     public List<Order> searchById(Long userId) {
         return orderRepository.findByUserId(userId);

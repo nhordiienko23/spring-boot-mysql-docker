@@ -122,4 +122,18 @@ public class ProfileIntegrationTest {
 
         assertTrue(userRepository.findById(testUser.getId()).isEmpty());
     }
+    @Test
+    @DisplayName("Should return user's orders successfully")
+    void getMyOrders_ShouldReturnOrdersList() throws Exception {
+        mockMvc.perform(get("/profile/my-orders")
+                        .with(user(customUserDetails)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray()); // Ожидаем JSON-массив заказов
+    }
+    @Test
+    @DisplayName("Should redirect to login when unauthenticated user tries to get orders")
+    void getMyOrders_WhenUnauthenticated_ShouldRedirectToLogin() throws Exception {
+        mockMvc.perform(get("/profile/my-orders"))
+                .andExpect(status().is3xxRedirection());
+    }
 }

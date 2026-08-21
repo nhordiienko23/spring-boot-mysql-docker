@@ -1,7 +1,10 @@
 package com.github.nhordiienko23.springmysql.controller;
 
 import com.github.nhordiienko23.springmysql.model.Order;
+import com.github.nhordiienko23.springmysql.model.Role;
+import com.github.nhordiienko23.springmysql.model.User;
 import com.github.nhordiienko23.springmysql.repository.OrderRepository;
+import com.github.nhordiienko23.springmysql.service.CustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -66,8 +70,18 @@ class OrderIntegrationTest {
 
     @Test
     void shouldAllowAdminToSearchOrdersByUserId() throws Exception {
+        // Создаем твоего реального пользователя из базы (или фейкового с нужным ID)
+        User adminUser = User.builder()
+                .id(1L) // Важно, чтобы ID совпадал
+                .email("admin@test.com")
+                .firstName("Admin")
+                .roles(List.of(Role.ROLE_ADMIN))
+                .build();
+
+        CustomUserDetails adminDetails = new CustomUserDetails(adminUser);
+
         mockMvc.perform(get("/orders/by-user")
-                        .with(user("admin_guy").roles("ADMIN"))
+                        .with(user(adminDetails)) // Передаем наш CustomUserDetails вместо строки "admin_guy"
                         .param("userId", "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
